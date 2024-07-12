@@ -9,22 +9,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.ResourceUtils;
-import com.dataprocessing.multithreadedcsvimporter.customer.csvimport.CustomerImportProcessor;
-import com.dataprocessing.multithreadedcsvimporter.dataprocessing.CSVImporter;
-import com.dataprocessing.multithreadedcsvimporter.dataprocessing.DefaultCSVImporter;
+import com.dataprocessing.multithreadedcsvimporter.customer.csvimport.CustomerCSVImporter;
 
 @SpringBootApplication
 @RequiredArgsConstructor
 public class MultithreadedCsvImporterApplication {
-
-    private final CustomerImportProcessor customerImportProcessor;
 
     public static void main(String[] args) {
         SpringApplication.run(MultithreadedCsvImporterApplication.class, args);
     }
 
     @Bean
-    public CommandLineRunner run(CSVImporter csvImporter) {
+    public CommandLineRunner run(CustomerCSVImporter csvImporter) {
         return (args) -> {
             File file = ResourceUtils.getFile("classpath:import/customers-data.csv");
             CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
@@ -34,11 +30,6 @@ public class MultithreadedCsvImporterApplication {
             csvImporter.setCsvFormat(csvFormat);
             csvImporter.startImport(file);
         };
-    }
-
-    @Bean
-    public CSVImporter csvImporter() {
-        return new DefaultCSVImporter(customerImportProcessor);
     }
 
 }

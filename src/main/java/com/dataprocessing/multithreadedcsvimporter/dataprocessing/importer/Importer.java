@@ -1,4 +1,4 @@
-package com.dataprocessing.multithreadedcsvimporter.dataprocessing;
+package com.dataprocessing.multithreadedcsvimporter.dataprocessing.importer;
 
 import java.io.File;
 
